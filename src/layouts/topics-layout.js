@@ -42,7 +42,7 @@ const TopicsLayout = () => {
                         value={topic.slug}
                         LinkComponent={Link}
                         to={`/t/${topic.slug}`}
-                        sx={{ textTransform: "none", fontWeight: 400 }}
+                        sx={{ textTransform: "none", fontWeight: 400, fontFamily: "inherit" }}
                     />
                 ))}
             </Tabs>
