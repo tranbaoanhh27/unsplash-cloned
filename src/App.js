@@ -4,6 +4,7 @@ import TopicsLayout, { loader as topicsLoader } from "./layouts/topics-layout";
 import ErrorPage from "./pages/error-page/error-page";
 import TopicOverviewPage, { loader as topicPhotosLoader } from "./pages/topic-overview-page/topic-overview-page";
 import HomePage, { loader as homeLoader } from "./pages/home-page/home-page";
+import SearchPage from "./pages/search-page/search-page";
 
 const router = createBrowserRouter([
     {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
                 element: <TopicsLayout />,
                 loader: topicsLoader,
                 children: [{ path: ":slug", element: <TopicOverviewPage />, loader: topicPhotosLoader }],
+            },
+            {
+                path: "s",
+                children: [{ path: "photos/:keyword", element: <SearchPage /> }],
             },
         ],
     },

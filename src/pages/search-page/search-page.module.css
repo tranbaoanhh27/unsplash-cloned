@@ -1,0 +1,28 @@
+.topBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0px;
+    border: none;
+    padding: 10px 40px;
+    box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.35);
+}
+
+.loadMoreButton {
+    width: calc(100% - 16px);
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin: 8px;
+    padding: 16px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.loadMoreButton:hover {
+    cursor: pointer;
+    border: 2px solid #ccc;
+    font-weight: 500;
+    background-color: #fefefe;
+}

@@ -8,8 +8,6 @@ import { saveAs } from "file-saver";
 import "react-loading-skeleton/dist/skeleton.css";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
-var countLoadedPhotos = 0;
-
 const PhotoGridItem = ({ photo }) => {
     const downloadPhoto = useCallback(
         (event) => {
@@ -33,7 +31,6 @@ const PhotoGridItem = ({ photo }) => {
                 height="auto"
                 placeholder={<Skeleton width="100%" height={photo.height} />}
                 effect="blur"
-                afterLoad={() => console.log(++countLoadedPhotos)}
             />
             <div className={styles.overlay} title="Open in new tab">
                 <div className={styles.footer}>

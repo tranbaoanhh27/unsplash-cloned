@@ -27,4 +27,19 @@ API.getRandomPhoto = async (query = "background", count = 1) => {
     return response.data;
 };
 
+API.searchPhotos = async (keyword = null, page = 1, sortBy = "relevant", orientation = "landscape") => {
+    if (!keyword) return [];
+    const response = await axios.get(
+        `${BASE_URL}/search/photos/?client_id=${ACCESS_KEY}&query=${keyword}&page=${page}&order_by=${sortBy}&orientation=${orientation}`
+    );
+    return {
+        photos: response.data.results,
+        totalPhotos: response.data.total,
+        totalPages: response.data.total_pages,
+        page: page,
+        sortMode: sortBy,
+        orientation: orientation,
+    };
+};
+
 export default API;

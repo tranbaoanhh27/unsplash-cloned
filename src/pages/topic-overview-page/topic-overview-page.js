@@ -3,8 +3,6 @@ import API from "../../utils/api";
 import PhotosGrid from "../../components/photos-grid/photos-grid";
 import { useEffect, useState } from "react";
 import usePageBottom from "../../hooks/use-page-bottom";
-import styles from "./topic-overview-page.module.css";
-import IconButton from "../../components/icon-button/icon-button";
 
 const TopicOverviewPage = () => {
     const data = useLoaderData();
@@ -13,13 +11,6 @@ const TopicOverviewPage = () => {
     const [photos, setPhotos] = useState(data.photos || []);
     const [page, setPage] = useState(data.page || 1);
     const [reachedBottom, resetReachedBottom] = usePageBottom();
-
-    const scrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    };
 
     useEffect(() => {
         const fetchMorePhotos = async () => {
@@ -41,17 +32,7 @@ const TopicOverviewPage = () => {
         setPage(data.page);
     }, [data]);
 
-    return (
-        <>
-            <IconButton
-                className={styles.backToTopButton}
-                fontawesomeClass="fa-solid fa-angle-up"
-                title="Back To Top"
-                onClick={scrollToTop}
-            />
-            <PhotosGrid photos={photos} />
-        </>
-    );
+    return <PhotosGrid photos={photos} />;
 };
 
 export default TopicOverviewPage;
