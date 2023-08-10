@@ -2,6 +2,7 @@ import styles from "./home-page.module.css";
 import SearchForm from "../../components/search-form/search-form";
 
 const HomePage = () => {
+    document.title = "Home | Unsplash";
     return (
         <div className={styles.container}>
             <img

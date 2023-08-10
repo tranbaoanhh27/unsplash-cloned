@@ -9,9 +9,11 @@ const ErrorPage = () => {
     let title = error.data.title || "Page not found";
     let message = error.data.message || "Hmm, the page you were looking for doesn't seem to exist anymore.";
 
+    document.title = `${title} | Unsplash`;
+
     const goBackHome = useCallback(() => {
         navigate("/");
-    }, []);
+    }, [navigate]);
 
     return (
         <div className={styles.container}>
