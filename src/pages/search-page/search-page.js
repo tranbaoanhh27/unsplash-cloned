@@ -1,4 +1,4 @@
-import { json, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { InputLabel } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -23,6 +23,8 @@ const SearchPage = () => {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
+    const [errorMessage, setErrorMessage] = useState(null);
+
     const changeOrientationHandler = (event) => {
         setOrientation(event.target.value);
     };
@@ -39,8 +41,9 @@ const SearchPage = () => {
                 setTotalPhotos(data.totalPhotos);
                 setPage(data.page);
                 setTotalPages(data.totalPages);
+                setErrorMessage(null);
             } catch (error) {
-                throw json({ title: "We're sorry", message: "We currently cannot contact with the server..." });
+                setErrorMessage("Sorry! Something went wrong while fetching more photos...");
             }
         }
     };
@@ -53,8 +56,9 @@ const SearchPage = () => {
                 setTotalPhotos(data.totalPhotos);
                 setPage(1);
                 setTotalPages(data.totalPages);
+                setErrorMessage(null);
             } catch (error) {
-                throw json({ title: "We're sorry", message: "We currently cannot contact with the server..." });
+                setErrorMessage("Sorry! Something went wrong while searching photos...");
             }
         })();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -62,7 +66,8 @@ const SearchPage = () => {
 
     return (
         <>
-            <div className={styles.topBar}>
+            <div
+                className={`${styles.topBar} d-flex flex-column flex-xl-row gap-4 justify-content-between align-items-start align-items-xl-center`}>
                 <div className="d-flex flex-column gap-1 justify-content-start">
                     <h1>
                         You searched for "<em>{params.keyword}</em>"
@@ -104,12 +109,17 @@ const SearchPage = () => {
                     </FormControl>
                 </form>
             </div>
-            <PhotosGrid photos={photos} />
-            {page < totalPages && (
-                <div className={styles.loadMoreButton} onClick={loadNextPage}>
-                    {`Load more (${photos.length}/${totalPhotos})`}
-                </div>
+            {!errorMessage && (
+                <>
+                    <PhotosGrid photos={photos} />
+                    {page < totalPages && (
+                        <div className={styles.loadMoreButton} onClick={loadNextPage}>
+                            {`Load more (${photos.length}/${totalPhotos})`}
+                        </div>
+                    )}
+                </>
             )}
+            {errorMessage && <div className="alert alert-warning text-center mx-5 my-4">{errorMessage}</div>}
         </>
     );
 };

@@ -1,7 +1,4 @@
 .topBar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin: 10px 0px;
     border: none;
     padding: 10px 40px;

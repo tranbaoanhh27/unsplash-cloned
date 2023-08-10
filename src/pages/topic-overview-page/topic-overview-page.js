@@ -20,7 +20,7 @@ const TopicOverviewPage = () => {
                 setPage(data.page);
                 resetReachedBottom();
             } catch (error) {
-                throw json({ title: "We're sorry", message: "We currently cannot fetch photos data..." });
+                console.log(error);
             }
         };
 

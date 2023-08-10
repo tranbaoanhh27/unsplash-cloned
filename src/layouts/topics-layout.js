@@ -31,8 +31,8 @@ const TopicsLayout = () => {
                 const data = await API.getTopics(page + 1);
                 setPage(data.page);
                 setTopics((curTopics) => [...curTopics, ...data.topics]);
-            } catch {
-                throw json({ title: "We're sorry!", message: "We currently cannot get data from server..." });
+            } catch (error) {
+                console.log(error);
             }
         }
     };
