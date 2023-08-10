@@ -3,7 +3,7 @@ import RootLayout from "./layouts/root-layout";
 import TopicsLayout, { loader as topicsLoader } from "./layouts/topics-layout";
 import ErrorPage from "./pages/error-page/error-page";
 import TopicOverviewPage, { loader as topicPhotosLoader } from "./pages/topic-overview-page/topic-overview-page";
-import HomePage from "./pages/home-page/home-page";
+import HomePage, { loader as homeLoader } from "./pages/home-page/home-page";
 
 const router = createBrowserRouter([
     {
@@ -14,6 +14,7 @@ const router = createBrowserRouter([
             {
                 index: true,
                 element: <HomePage />,
+                loader: homeLoader,
             },
             {
                 path: "t",

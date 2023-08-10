@@ -22,8 +22,8 @@ API.getPhotos = async (topicSlug = null, page = 1) => {
     };
 };
 
-API.getRandomPhoto = async (query = "background") => {
-    const response = await axios.get(`${BASE_URL}/photos/random/?client_id=${ACCESS_KEY}`);
+API.getRandomPhoto = async (query = "background", count = 1) => {
+    const response = await axios.get(`${BASE_URL}/photos/random/?client_id=${ACCESS_KEY}&count=${count}`);
     return response.data;
 };
 
