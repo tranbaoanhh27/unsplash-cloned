@@ -22,4 +22,9 @@ API.getPhotos = async (topicSlug = null, page = 1) => {
     };
 };
 
+API.getRandomPhoto = async (query = "background") => {
+    const response = await axios.get(`${BASE_URL}/photos/random/?client_id=${ACCESS_KEY}`);
+    return response.data;
+};
+
 export default API;
