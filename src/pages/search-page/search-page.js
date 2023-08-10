@@ -3,7 +3,7 @@ import { InputLabel } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { useEffect, useReducer } from "react";
+import { useEffect, useState } from "react";
 import styles from "./search-page.module.css";
 import API from "../../utils/api";
 import PhotosGrid from "../../components/photos-grid/photos-grid";
@@ -13,49 +13,52 @@ const SearchPage = () => {
     document.title = `${params.keyword} Pictures | Download Free Images on Unsplash`;
 
     const validOrientations = ["landscape", "portrait", "squarish"];
+    const [orientation, setOrientation] = useState("landscape");
+
     const validSortMode = ["relevant", "latest"];
+    const [sortBy, setSortBy] = useState("relevant");
 
-    const [searchState, searchStateDispatch] = useReducer(reducer, {
-        orientation: "landscape",
-        sortBy: "relevant",
-        page: 1,
-        totalPages: 1,
-        photos: [],
-        totalPhotos: 0,
-    });
+    const [photos, setPhotos] = useState([]);
+    const [totalPhotos, setTotalPhotos] = useState(0);
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
-    useEffect(() => {
-        searchStateDispatch({ type: "RESET" });
-    }, [params.keyword]);
+    const changeOrientationHandler = (event) => {
+        setOrientation(event.target.value);
+    };
+
+    const changeSortModeHandler = (event) => {
+        setSortBy(event.target.value);
+    };
+
+    const loadNextPage = async () => {
+        if (page < totalPages) {
+            try {
+                const data = await API.searchPhotos(params.keyword, page + 1, sortBy, orientation);
+                setPhotos([...photos, ...data.photos]);
+                setTotalPhotos(data.totalPhotos);
+                setPage(data.page);
+                setTotalPages(data.totalPages);
+            } catch (error) {
+                throw json({ title: "We're sorry", message: "We currently cannot contact with the server..." });
+            }
+        }
+    };
 
     useEffect(() => {
         (async () => {
             try {
-                const data = await API.searchPhotos(
-                    params.keyword,
-                    searchState.page,
-                    searchState.sortBy,
-                    searchState.orientation
-                );
-                searchStateDispatch({ type: "SET_ALL", data: data });
+                const data = await API.searchPhotos(params.keyword, 1, sortBy, orientation);
+                setPhotos(data.photos);
+                setTotalPhotos(data.totalPhotos);
+                setPage(1);
+                setTotalPages(data.totalPages);
             } catch (error) {
-                throw json({ title: "Server Error!", message: "We currently cannot get data from server..." });
+                throw json({ title: "We're sorry", message: "We currently cannot contact with the server..." });
             }
         })();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchState.page, searchState.sortBy, searchState.orientation]);
-
-    const loadNextPage = () => {
-        searchStateDispatch({ type: "INCREASE_PAGE" });
-    };
-
-    const changeSortModeHandler = (event) => {
-        searchStateDispatch({ type: "SET_SORT_BY", value: event.target.value });
-    };
-
-    const changeOrientationHandler = (event) => {
-        searchStateDispatch({ type: "SET_ORIENTATION", value: event.target.value });
-    };
+    }, [params.keyword, orientation, sortBy]);
 
     return (
         <>
@@ -64,7 +67,7 @@ const SearchPage = () => {
                     <h1>
                         You searched for "<em>{params.keyword}</em>"
                     </h1>
-                    <b>{`Total ${searchState.totalPhotos} results`}</b>
+                    <b>{`Total ${totalPhotos} results`}</b>
                 </div>
                 <form className="d-flex flex-row gap-2">
                     <FormControl>
@@ -72,7 +75,7 @@ const SearchPage = () => {
                         <Select
                             labelId="orientation-label"
                             id="orientation"
-                            value={searchState.orientation}
+                            value={orientation}
                             label="Orientation"
                             onChange={changeOrientationHandler}
                             sx={{ fontSize: 14 }}>
@@ -88,7 +91,7 @@ const SearchPage = () => {
                         <Select
                             labelId="sort-label"
                             id="sort"
-                            value={searchState.sortBy}
+                            value={sortBy}
                             label="Sort by"
                             onChange={changeSortModeHandler}
                             sx={{ fontSize: 14 }}>
@@ -101,10 +104,10 @@ const SearchPage = () => {
                     </FormControl>
                 </form>
             </div>
-            <PhotosGrid photos={searchState.photos} />
-            {searchState.page < searchState.totalPages && (
+            <PhotosGrid photos={photos} />
+            {page < totalPages && (
                 <div className={styles.loadMoreButton} onClick={loadNextPage}>
-                    {`Load more (${searchState.photos.length}/${searchState.totalPhotos})`}
+                    {`Load more (${photos.length}/${totalPhotos})`}
                 </div>
             )}
         </>
@@ -112,59 +115,3 @@ const SearchPage = () => {
 };
 
 export default SearchPage;
-
-const reducer = (state, action) => {
-    switch (action.type) {
-        case "RESET":
-            return {
-                ...state,
-                page: 1,
-                totalPages: 1,
-                photos: [],
-                totalPhotos: 0,
-            };
-
-        case "SET_ALL":
-            return {
-                ...state,
-                orientation: action.data.orientation,
-                sortBy: action.data.sortMode,
-                page: action.data.page,
-                totalPages: action.data.totalPages,
-                photos: [...state.photos, ...action.data.photos].reduce((res, photo) => {
-                    if (res.findIndex((item) => item.id === photo.id) === -1) res.push(photo);
-                    return res;
-                }, []),
-                totalPhotos: action.data.totalPhotos,
-            };
-
-        case "INCREASE_PAGE":
-            return {
-                ...state,
-                page: state.page < state.totalPages ? state.page + 1 : state.page,
-            };
-
-        case "SET_SORT_BY":
-            return {
-                ...state,
-                sortBy: action.value,
-                page: 1,
-                totalPages: 1,
-                photos: [],
-                totalPhotos: 0,
-            };
-
-        case "SET_ORIENTATION":
-            return {
-                ...state,
-                orientation: action.value,
-                page: 1,
-                totalPages: 1,
-                photos: [],
-                totalPhotos: 0,
-            };
-
-        default:
-            return { ...state };
-    }
-};

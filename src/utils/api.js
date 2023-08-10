@@ -37,7 +37,7 @@ API.searchPhotos = async (keyword = null, page = 1, sortBy = "relevant", orienta
         totalPhotos: response.data.total,
         totalPages: response.data.total_pages,
         page: page,
-        sortMode: sortBy,
+        sortBy: sortBy,
         orientation: orientation,
     };
 };
