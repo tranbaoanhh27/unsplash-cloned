@@ -1,0 +1,39 @@
+.container {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #00000055;
+    display: none;
+}
+
+.container:hover .overlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 5%;
+    cursor: pointer;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-self: end;
+}
+
+.footer > img {
+    border-radius: 50%;
+    margin-inline-end: 20px;
+}
+
+.footer > a {
+    text-decoration: none;
+    color: white;
+}

@@ -43,13 +43,14 @@
     box-shadow: none !important;
 }
 
-.submitPhotoButton {
+.loginButton {
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 4px 16px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
-.submitPhotoButton:hover {
+.loginButton:hover {
     border: 1px solid #555;
 }
 
@@ -58,4 +59,9 @@
 .toggleButton:focus {
     box-shadow: none !important;
     border: none;
+}
+
+.activeNavLink {
+    border-bottom: 2px solid black;
+    font-weight: 600;
 }

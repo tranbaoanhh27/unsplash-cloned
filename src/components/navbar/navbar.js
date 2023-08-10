@@ -11,11 +11,19 @@ const Navbar = () => {
                     <img alt="Unsplash Logo" src={Logo} style={{ width: 30, height: 30 }} title="Unsplash Home" />
                 </Link>
                 <form
-                    className={`${styles.searchForm} d-flex my-2 my-lg-0 flex-grow-1 justify-content-start align-items-center`}
-                    title="Search Unsplash">
+                    className={`${styles.searchForm} d-flex my-2 my-lg-0 flex-grow-1 justify-content-start align-items-center`}>
                     <div className={styles.inputContainer}>
-                        <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" className={styles.searchIcon} />
-                        <input className="form-control" type="text" placeholder="Search Images" />
+                        <FontAwesomeIcon
+                            icon="fa-solid fa-magnifying-glass"
+                            className={styles.searchIcon}
+                            title="Search Unsplash"
+                        />
+                        <input
+                            className="form-control"
+                            type="text"
+                            placeholder="Search Images"
+                            title="Search Unsplash"
+                        />
                     </div>
                 </form>
                 <button
@@ -29,14 +37,29 @@ const Navbar = () => {
                     <FontAwesomeIcon icon="fa-solid fa-bars" />
                 </button>
                 <div className="collapse navbar-collapse flex-grow-0" id="navbar-links">
-                    <ul className="navbar-nav mt-2 mt-lg-0 gap-1 d-flex align-items-center">
+                    <ul className="navbar-nav mt-2 mt-lg-0 gap-3 d-flex align-items-center">
                         <li className="nav-item">
-                            <NavLink className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`} to="/login">
-                                Log in
+                            <NavLink
+                                className={({ isActive }) =>
+                                    `nav-link ${isActive ? `active ${styles.activeNavLink}` : ""}`
+                                }
+                                to="/">
+                                Home
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <button className={`${styles.submitPhotoButton} nav-link`}>Submit a photo</button>
+                            <NavLink
+                                className={({ isActive }) =>
+                                    `nav-link ${isActive ? `active ${styles.activeNavLink}` : ""}`
+                                }
+                                to="/t">
+                                Browse Photos
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <Link className={`${styles.loginButton} nav-link`} to="/login">
+                                Log in to Unsplash
+                            </Link>
                         </li>
                     </ul>
                 </div>

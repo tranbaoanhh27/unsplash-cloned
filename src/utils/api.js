@@ -13,4 +13,13 @@ API.getTopics = async (page = 1) => {
     };
 };
 
+API.getPhotos = async (topicSlug = null, page = 1) => {
+    if (!topicSlug) return [];
+    const response = await axios.get(`${BASE_URL}/topics/${topicSlug}/photos/?client_id=${ACCESS_KEY}&page=${page}`);
+    return {
+        photos: response.data,
+        page: page,
+    };
+};
+
 export default API;

@@ -1,19 +1,26 @@
-import { Link, Outlet, json, useLoaderData } from "react-router-dom";
+import { Link, Outlet, json, useLoaderData, useNavigate, useParams } from "react-router-dom";
 import API from "../utils/api";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const TopicsLayout = () => {
     const data = useLoaderData();
+    const params = useParams();
+    const navigate = useNavigate();
 
     const [topics, setTopics] = useState(data.topics || []);
     const [page, setPage] = useState(data.page);
-    const [topic, setTopic] = useState(data.topics[0].slug || undefined);
+    const [topic, setTopic] = useState(params.slug || data.topics[0].slug);
+
+    useEffect(() => {
+        if (!params.slug) navigate(`/t/${data.topics[0].slug}`);
+    }, [data.topics, navigate, params.slug]);
 
     const handleChangeTopic = async (event, newTopic) => {
         setTopic(newTopic);
-        if (newTopic === topics[topics.length - 1].slug) {
+        const newTopicIndex = topics.findIndex((topic) => topic.slug === newTopic);
+        if (newTopicIndex >= topics.length - 10) {
             try {
                 const data = await API.getTopics(page + 1);
                 setPage(data.page);
@@ -34,7 +41,10 @@ const TopicsLayout = () => {
                 value={topic}
                 TabIndicatorProps={{ style: { backgroundColor: "black" } }}
                 textColor="inherit"
-                sx={{ boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", paddingTop: 1 }}>
+                sx={{
+                    boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+                    paddingTop: 1,
+                }}>
                 {topics.map((topic) => (
                     <Tab
                         key={topic.id}
