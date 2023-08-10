@@ -20,7 +20,7 @@ const TopicOverviewPage = () => {
                 setPage(data.page);
                 resetReachedBottom();
             } catch (error) {
-                throw json({ message: "We currently cannot fetch photos data..." });
+                throw json({ title: "We're sorry", message: "We currently cannot fetch photos data..." });
             }
         };
 
@@ -42,6 +42,6 @@ export const loader = async ({ request, params }) => {
         const data = await API.getPhotos(params.slug);
         return data;
     } catch (error) {
-        throw json({ message: "We currently cannot fetch photos data..." });
+        throw json({ title: "We're sorry", message: "We currently cannot fetch photos data..." });
     }
 };

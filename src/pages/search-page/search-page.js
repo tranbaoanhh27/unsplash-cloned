@@ -42,7 +42,8 @@ const SearchPage = () => {
                 throw json({ title: "Server Error!", message: "We currently cannot get data from server..." });
             }
         })();
-    }, [params.keyword, searchState.page, searchState.sortBy, searchState.orientation]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchState.page, searchState.sortBy, searchState.orientation]);
 
     const loadNextPage = () => {
         searchStateDispatch({ type: "INCREASE_PAGE" });
@@ -61,7 +62,7 @@ const SearchPage = () => {
             <div className={styles.topBar}>
                 <div className="d-flex flex-column gap-1 justify-content-start">
                     <h1>
-                        <em>{params.keyword}</em>
+                        You searched for "<em>{params.keyword}</em>"
                     </h1>
                     <b>{`Total ${searchState.totalPhotos} results`}</b>
                 </div>
@@ -130,7 +131,10 @@ const reducer = (state, action) => {
                 sortBy: action.data.sortMode,
                 page: action.data.page,
                 totalPages: action.data.totalPages,
-                photos: [...state.photos, ...action.data.photos],
+                photos: [...state.photos, ...action.data.photos].reduce((res, photo) => {
+                    if (res.findIndex((item) => item.id === photo.id) === -1) res.push(photo);
+                    return res;
+                }, []),
                 totalPhotos: action.data.totalPhotos,
             };
 

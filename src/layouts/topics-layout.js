@@ -20,7 +20,7 @@ const TopicsLayout = () => {
             const topicTitle = topics.find((topic) => topic.slug === params.slug).title;
             document.title = `${topicTitle} | Unsplash`;
         }
-    }, [data.topics, navigate, params.slug]);
+    }, [data.topics, navigate, params.slug, topics]);
 
     const handleChangeTopic = async (event, newTopic) => {
         setTopic(newTopic);
@@ -32,7 +32,7 @@ const TopicsLayout = () => {
                 setPage(data.page);
                 setTopics((curTopics) => [...curTopics, ...data.topics]);
             } catch {
-                throw json({ title: "Server Error!", message: "We cannot get data from server..." });
+                throw json({ title: "We're sorry!", message: "We currently cannot get data from server..." });
             }
         }
     };
@@ -74,6 +74,6 @@ export const loader = async () => {
         const data = await API.getTopics();
         return data;
     } catch {
-        throw json({ title: "Server Error!", message: "We cannot get data from server..." });
+        throw json({ title: "We're sorry!", message: "We currently cannot get data from server..." });
     }
 };

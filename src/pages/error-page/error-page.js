@@ -6,8 +6,10 @@ const ErrorPage = () => {
     const error = useRouteError();
     const navigate = useNavigate();
 
-    let title = error.data.title || "Page not found";
-    let message = error.data.message || "Hmm, the page you were looking for doesn't seem to exist anymore.";
+    let title = (error && error.data && error.data.title) || "Page not found";
+    let message =
+        (error && error.data && error.data.message) ||
+        "Hmm, the page you were looking for doesn't seem to exist anymore.";
 
     document.title = `${title} | Unsplash`;
 
