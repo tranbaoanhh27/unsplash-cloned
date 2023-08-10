@@ -1,0 +1,39 @@
+.searchForm {
+    margin-inline-end: 20px;
+}
+
+.searchForm > .inputContainer {
+    max-width: 60vw;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    background-color: #eee;
+    border: 1px solid #eee;
+    border-radius: 24px;
+    padding: 4px 16px;
+}
+
+.searchForm > .inputContainer:hover,
+.searchForm > .inputContainer:focus {
+    border: 1px solid #767676;
+}
+
+.searchIcon {
+    color: #767676;
+}
+
+.searchIcon:hover {
+    color: black;
+    cursor: pointer;
+}
+
+.inputContainer > input,
+.inputContainer > input:active,
+.inputContainer > input:focus {
+    border: none !important;
+    background-color: transparent;
+    padding-inline: 20px;
+    color: #767676;
+    outline: none !important;
+    box-shadow: none !important;
+}

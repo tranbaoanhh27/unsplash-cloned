@@ -1,8 +1,9 @@
-import { createBrowserRouter, RouterProvider, BrowserRouter, Route, Routes } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./layouts/root-layout";
 import TopicsLayout, { loader as topicsLoader } from "./layouts/topics-layout";
-import ErrorPage from "./pages/error-page";
+import ErrorPage from "./pages/error-page/error-page";
 import TopicOverviewPage, { loader as topicPhotosLoader } from "./pages/topic-overview-page/topic-overview-page";
+import HomePage from "./pages/home-page/home-page";
 
 const router = createBrowserRouter([
     {
@@ -10,6 +11,10 @@ const router = createBrowserRouter([
         element: <RootLayout />,
         errorElement: <ErrorPage />,
         children: [
+            {
+                index: true,
+                element: <HomePage />,
+            },
             {
                 path: "t",
                 element: <TopicsLayout />,

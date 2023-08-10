@@ -13,13 +13,19 @@ const TopicsLayout = () => {
     const [page, setPage] = useState(data.page);
     const [topic, setTopic] = useState(params.slug || data.topics[0].slug);
 
+    // If no topic slug is provided, navigate to the first topic
     useEffect(() => {
         if (!params.slug) navigate(`/t/${data.topics[0].slug}`);
+        else {
+            const topicTitle = topics.find((topic) => topic.slug === params.slug).title;
+            document.title = `${topicTitle} | Unsplash`;
+        }
     }, [data.topics, navigate, params.slug]);
 
     const handleChangeTopic = async (event, newTopic) => {
         setTopic(newTopic);
         const newTopicIndex = topics.findIndex((topic) => topic.slug === newTopic);
+        document.title = `${topics[newTopicIndex].title} | Unsplash`;
         if (newTopicIndex >= topics.length - 10) {
             try {
                 const data = await API.getTopics(page + 1);

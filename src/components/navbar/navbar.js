@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import Logo from "../../assets/images/logo.png";
 import styles from "./navbar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SearchForm from "../search-form/search-form";
 
 const Navbar = () => {
     return (
@@ -10,22 +11,7 @@ const Navbar = () => {
                 <Link className="navbar-brand" href="/">
                     <img alt="Unsplash Logo" src={Logo} style={{ width: 30, height: 30 }} title="Unsplash Home" />
                 </Link>
-                <form
-                    className={`${styles.searchForm} d-flex my-2 my-lg-0 flex-grow-1 justify-content-start align-items-center`}>
-                    <div className={styles.inputContainer}>
-                        <FontAwesomeIcon
-                            icon="fa-solid fa-magnifying-glass"
-                            className={styles.searchIcon}
-                            title="Search Unsplash"
-                        />
-                        <input
-                            className="form-control"
-                            type="text"
-                            placeholder="Search Images"
-                            title="Search Unsplash"
-                        />
-                    </div>
-                </form>
+                <SearchForm className="d-flex my-2 my-lg-0 flex-grow-1 justify-content-start align-items-center" />
                 <button
                     className={`${styles.toggleButton} navbar-toggler d-lg-none`}
                     type="button"

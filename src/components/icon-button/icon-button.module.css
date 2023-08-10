@@ -5,12 +5,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #111111;
+    background-color: black;
+    opacity: 0.9;
 }
 
 .container:hover {
     cursor: pointer;
-    background-color: #000000;
+    opacity: 1;
 }
 
 .icon {
