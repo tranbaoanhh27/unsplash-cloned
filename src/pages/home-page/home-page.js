@@ -18,7 +18,7 @@ const HomePage = () => {
             } catch (error) {
                 setBackgroundUrl(DEFAULT_BACKGROUND_URL);
             }
-        }, 5000);
+        }, 60000);
 
         // Clean-up function
         return () => clearTimeout(timer);
