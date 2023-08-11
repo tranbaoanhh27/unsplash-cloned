@@ -37,7 +37,7 @@ const SearchPage = () => {
         if (page < totalPages) {
             try {
                 const data = await API.searchPhotos(params.keyword, page + 1, sortBy, orientation);
-                setPhotos([...photos, ...data.photos]);
+                setPhotos((curPhotos) => [...curPhotos, ...data.photos]);
                 setTotalPhotos(data.totalPhotos);
                 setPage(data.page);
                 setTotalPages(data.totalPages);

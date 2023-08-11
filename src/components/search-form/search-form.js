@@ -12,6 +12,10 @@ const SearchForm = ({ className }) => {
         navigate(`/s/photos/${keywordRef.current.value}`);
     };
 
+    const searchIconClickHandler = () => {
+        keywordRef.current.focus();
+    };
+
     return (
         <form className={`${styles.searchForm} ${className}`} onSubmit={submitHandler}>
             <div className={styles.inputContainer}>
@@ -19,6 +23,7 @@ const SearchForm = ({ className }) => {
                     icon="fa-solid fa-magnifying-glass"
                     className={styles.searchIcon}
                     title="Search Unsplash"
+                    onClick={searchIconClickHandler}
                 />
                 <input
                     ref={keywordRef}
