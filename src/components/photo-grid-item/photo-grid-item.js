@@ -37,9 +37,12 @@ const PhotoGridItem = ({ photo }) => {
                     width="100%"
                     height="auto"
                     effect="blur"
+                    threshold={200}
                     placeholder={<Skeleton width="100%" height="50vh" />}
-                    afterLoad={() => console.log(`Loaded ${++count} images`)}
-                    onLoad={() => setLoaded(true)}
+                    afterLoad={() => {
+                        console.log(`Loaded ${++count} images`);
+                        setLoaded(true);
+                    }}
                 />
                 <div className={styles.overlay} title="Open in new tab">
                     <div className={styles.footer}>
