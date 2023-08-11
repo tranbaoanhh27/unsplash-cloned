@@ -14,15 +14,15 @@ const HomePage = () => {
     const [backgroundUrl, setBackgroundUrl] = useState(DEFAULT_BACKGROUND_URL);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
+        const timer = setInterval(() => {
             const randomIndex = Math.floor(Math.random() * photos.length) % photos.length;
             const randomPhoto = photos[randomIndex];
             if (randomPhoto) setBackgroundUrl(randomPhoto.urls.full);
         }, 5000);
 
         // Clean-up function
-        return () => clearTimeout(timer);
-    }, [backgroundUrl, photos]);
+        return () => clearInterval(timer);
+    }, [photos]);
 
     return (
         <div className={styles.container}>
